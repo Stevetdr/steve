@@ -1,4 +1,4 @@
-// definizione pin I/O su Arduino nano
+// definizione pin I/O su Arduino nano  --
 int SpiaR   =  3 ;            // spia led ROSSO esterno
 int SpiaV   =  4 ;            // spia led VERDE esterno
 int SpiaB   =  5 ;            // spia BUZZER esterno
