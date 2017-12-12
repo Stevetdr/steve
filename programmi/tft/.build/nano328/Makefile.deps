@@ -1,0 +1,46 @@
+
+
+
+
+
+
+
+
+	
+
+
+
+.build/nano328/TFT/TFT.d : /usr/share/arduino/libraries/TFT/TFT.cpp
+	@mkdir -p .build/nano328/TFT
+	@/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=105 -I/usr/share/arduino/hardware/arduino/cores/arduino -ffunction-sections -fdata-sections -g -Os -w -I/usr/share/arduino/hardware/arduino/variants/eightanaloginputs -I/usr/share/arduino/hardware/arduino/cores/arduino -I/usr/share/arduino/hardware/arduino/cores/arduino/avr-libc -I/usr/share/arduino/libraries/SPI -I/usr/share/arduino/libraries/TFT -I/usr/share/arduino/libraries/TFT/utility -I/usr/share/arduino/libraries/Wire -I/usr/share/arduino/libraries/Wire/utility -I/usr/share/arduino/libraries/LiquidCrystal -I/usr/share/arduino/libraries/WiFi -I/usr/share/arduino/libraries/WiFi/utility -I/usr/share/arduino/libraries/Robot_Control -I/usr/share/arduino/libraries/Robot_Control/utility -I/usr/share/arduino/libraries/Robot_Motor -I/usr/share/arduino/libraries/Servo -I/usr/share/arduino/libraries/Stepper -I/usr/share/arduino/libraries/Esplora -I/usr/share/arduino/libraries/GSM -I/usr/share/arduino/libraries/Ethernet -I/usr/share/arduino/libraries/Ethernet/utility -I/usr/share/arduino/libraries/SD -I/usr/share/arduino/libraries/SD/utility -I/usr/share/arduino/libraries/Firmata -I/usr/share/arduino/libraries/EEPROM -I/usr/share/arduino/libraries/SoftwareSerial  -MM $^ > $@
+	
+	@printf ".build/nano328/TFT/TFT.d .build/nano328/TFT/" | cat - $@ > $@~ && mv $@~ $@
+
+.build/nano328/TFT/utility/glcdfont.d : /usr/share/arduino/libraries/TFT/utility/glcdfont.c
+	@mkdir -p .build/nano328/TFT/utility
+	@/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=105 -I/usr/share/arduino/hardware/arduino/cores/arduino -ffunction-sections -fdata-sections -g -Os -w -I/usr/share/arduino/hardware/arduino/variants/eightanaloginputs -I/usr/share/arduino/hardware/arduino/cores/arduino -I/usr/share/arduino/hardware/arduino/cores/arduino/avr-libc -I/usr/share/arduino/libraries/SPI -I/usr/share/arduino/libraries/TFT -I/usr/share/arduino/libraries/TFT/utility -I/usr/share/arduino/libraries/Wire -I/usr/share/arduino/libraries/Wire/utility -I/usr/share/arduino/libraries/LiquidCrystal -I/usr/share/arduino/libraries/WiFi -I/usr/share/arduino/libraries/WiFi/utility -I/usr/share/arduino/libraries/Robot_Control -I/usr/share/arduino/libraries/Robot_Control/utility -I/usr/share/arduino/libraries/Robot_Motor -I/usr/share/arduino/libraries/Servo -I/usr/share/arduino/libraries/Stepper -I/usr/share/arduino/libraries/Esplora -I/usr/share/arduino/libraries/GSM -I/usr/share/arduino/libraries/Ethernet -I/usr/share/arduino/libraries/Ethernet/utility -I/usr/share/arduino/libraries/SD -I/usr/share/arduino/libraries/SD/utility -I/usr/share/arduino/libraries/Firmata -I/usr/share/arduino/libraries/EEPROM -I/usr/share/arduino/libraries/SoftwareSerial  -MM $^ > $@
+	
+	@printf ".build/nano328/TFT/utility/glcdfont.d .build/nano328/TFT/utility/" | cat - $@ > $@~ && mv $@~ $@
+
+.build/nano328/TFT/utility/Adafruit_ST7735.d : /usr/share/arduino/libraries/TFT/utility/Adafruit_ST7735.cpp
+	@mkdir -p .build/nano328/TFT/utility
+	@/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=105 -I/usr/share/arduino/hardware/arduino/cores/arduino -ffunction-sections -fdata-sections -g -Os -w -I/usr/share/arduino/hardware/arduino/variants/eightanaloginputs -I/usr/share/arduino/hardware/arduino/cores/arduino -I/usr/share/arduino/hardware/arduino/cores/arduino/avr-libc -I/usr/share/arduino/libraries/SPI -I/usr/share/arduino/libraries/TFT -I/usr/share/arduino/libraries/TFT/utility -I/usr/share/arduino/libraries/Wire -I/usr/share/arduino/libraries/Wire/utility -I/usr/share/arduino/libraries/LiquidCrystal -I/usr/share/arduino/libraries/WiFi -I/usr/share/arduino/libraries/WiFi/utility -I/usr/share/arduino/libraries/Robot_Control -I/usr/share/arduino/libraries/Robot_Control/utility -I/usr/share/arduino/libraries/Robot_Motor -I/usr/share/arduino/libraries/Servo -I/usr/share/arduino/libraries/Stepper -I/usr/share/arduino/libraries/Esplora -I/usr/share/arduino/libraries/GSM -I/usr/share/arduino/libraries/Ethernet -I/usr/share/arduino/libraries/Ethernet/utility -I/usr/share/arduino/libraries/SD -I/usr/share/arduino/libraries/SD/utility -I/usr/share/arduino/libraries/Firmata -I/usr/share/arduino/libraries/EEPROM -I/usr/share/arduino/libraries/SoftwareSerial  -MM $^ > $@
+	
+	@printf ".build/nano328/TFT/utility/Adafruit_ST7735.d .build/nano328/TFT/utility/" | cat - $@ > $@~ && mv $@~ $@
+
+.build/nano328/TFT/utility/Adafruit_GFX.d : /usr/share/arduino/libraries/TFT/utility/Adafruit_GFX.cpp
+	@mkdir -p .build/nano328/TFT/utility
+	@/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=105 -I/usr/share/arduino/hardware/arduino/cores/arduino -ffunction-sections -fdata-sections -g -Os -w -I/usr/share/arduino/hardware/arduino/variants/eightanaloginputs -I/usr/share/arduino/hardware/arduino/cores/arduino -I/usr/share/arduino/hardware/arduino/cores/arduino/avr-libc -I/usr/share/arduino/libraries/SPI -I/usr/share/arduino/libraries/TFT -I/usr/share/arduino/libraries/TFT/utility -I/usr/share/arduino/libraries/Wire -I/usr/share/arduino/libraries/Wire/utility -I/usr/share/arduino/libraries/LiquidCrystal -I/usr/share/arduino/libraries/WiFi -I/usr/share/arduino/libraries/WiFi/utility -I/usr/share/arduino/libraries/Robot_Control -I/usr/share/arduino/libraries/Robot_Control/utility -I/usr/share/arduino/libraries/Robot_Motor -I/usr/share/arduino/libraries/Servo -I/usr/share/arduino/libraries/Stepper -I/usr/share/arduino/libraries/Esplora -I/usr/share/arduino/libraries/GSM -I/usr/share/arduino/libraries/Ethernet -I/usr/share/arduino/libraries/Ethernet/utility -I/usr/share/arduino/libraries/SD -I/usr/share/arduino/libraries/SD/utility -I/usr/share/arduino/libraries/Firmata -I/usr/share/arduino/libraries/EEPROM -I/usr/share/arduino/libraries/SoftwareSerial  -MM $^ > $@
+	
+	@printf ".build/nano328/TFT/utility/Adafruit_GFX.d .build/nano328/TFT/utility/" | cat - $@ > $@~ && mv $@~ $@
+
+
+
+.build/nano328/TFT/dependencies.d : .build/nano328/TFT/TFT.d .build/nano328/TFT/utility/glcdfont.d .build/nano328/TFT/utility/Adafruit_ST7735.d .build/nano328/TFT/utility/Adafruit_GFX.d
+	@echo [96mScanning dependencies of TFT[0m
+	@mkdir -p .build/nano328/TFT
+	@cat $^ > $@;
+
+all : .build/nano328/TFT/dependencies.d
+	@true
+

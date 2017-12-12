@@ -1,0 +1,14 @@
+
+
+
+
+
+.build/nano328/src/temperatura.cpp : src/temperatura.ino
+	@mkdir -p .build/nano328/src
+	@echo [93msrc/temperatura.ino[0m
+	@/usr/local/bin/ino preproc  -o $@ $^
+
+
+all : .build/nano328/src/temperatura.cpp
+	@true
+

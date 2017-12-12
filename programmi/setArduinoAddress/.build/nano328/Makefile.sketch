@@ -1,0 +1,14 @@
+
+
+
+
+
+.build/nano328/src/setArduinoAddress.cpp : src/setArduinoAddress.ino
+	@mkdir -p .build/nano328/src
+	@echo [93msrc/setArduinoAddress.ino[0m
+	@/usr/local/bin/ino preproc  -o $@ $^
+
+
+all : .build/nano328/src/setArduinoAddress.cpp
+	@true
+

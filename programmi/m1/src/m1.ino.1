@@ -1,0 +1,118 @@
+/*-----( Import needed libraries )-----*/
+#include <SoftwareSerial.h>
+#include <EEPROM.h>
+/*-----( Declare Constants and Pin Numbers )-----*/
+#define SSerialRX        6   //10  //Serial Receive pin     RO
+#define SSerialTX        5   //11  //Serial Transmit pin    DI
+#define SSerialTxControl 3   //RS485 Direction control
+
+#define RS485Transmit    HIGH
+#define RS485Receive     LOW
+
+#define Pin13LED         13
+#define BUTTON1          12              // pin di input dove è collegato il pulsante P1
+#define BUTTON2          11              // pin di input dove è collegato il pulsante P2
+
+/*-----( Declare objects )-----*/
+SoftwareSerial RS485Serial(SSerialRX, SSerialTX); // RX, TX
+
+/*-----( Declare Variables )-----*/
+int byteReceived; int byteReceived1; int byteReceived2;
+int byteToSend  = 0x10;     // 0x10 e' il master
+int byteToSend1 = 0x11;     // 0x11 e' lo slave nr.1
+int byteToSend2 = 0x00;
+int byteToSend3 = 0x00;     // dato generico che varia
+//int butt1 = HIGH;   // pulsante 1
+//int butt2 = HIGH;   // pulsante 2
+
+void setup() {  /****** SETUP: RUNS ONCE ******/
+    Serial.begin(9600); // Start the serial port
+    Serial.println("Parte il monitor su MASTER");
+    pinMode(Pin13LED, OUTPUT);
+    pinMode(SSerialTxControl, OUTPUT);
+    pinMode(BUTTON1, INPUT);     // imposta il pin digitale come input  
+    pinMode(BUTTON2, INPUT);     // imposta il pin digitale come input      
+    digitalWrite(SSerialTxControl, RS485Receive);  // Init Transceiver
+    RS485Serial.begin(300);   // Start the software serial port and set the data rate   era 4800
+
+    Serial.print (F("Master: il mio indirizzo e': "));Serial.println(EEPROM.read (0),DEC); Serial.println("");     
+}   //--(end s
+
+void loop() {  /****** LOOP: RUNS CONSTANTLY ******/
+// #################################################################################################
+    while (digitalRead(BUTTON1) == LOW) {  // legge il valore dell'input e lo conserva  
+  
+        while (digitalRead(BUTTON1) == LOW) { delay(1); }   // attesa rilascio pulsante
+        byteToSend2 = 0x01 ;    // letto pulsante 1
+        byteToSend3 = byteToSend3 + 1 ;                 // incrementa di uno    ss
+        if (byteToSend3 >= 200) { byteToSend3 = 0 ; }   // reset del contatore  ss
+
+        Serial.println("inviato a s1 ->   ----------------inizio dati");
+        Serial.print("  byte 0: ");Serial.print(byteToSend,HEX); Serial.println(" master"); 
+        Serial.print("  byte 1: ");Serial.print(byteToSend1,HEX);Serial.println(" slave ");
+        Serial.print("  byte 2: ");Serial.print(byteToSend2,HEX);Serial.println(" pulsante");
+        Serial.print("  byte 3: ");Serial.print(byteToSend3,HEX);Serial.println(" dato  ");    
+        Serial.println("------------------------------------fine dati");Serial.println(" ");     
+
+        digitalWrite(SSerialTxControl, RS485Transmit);   // Enable RS485 Transmit
+        delay(10);
+        RS485Serial.write(byteToSend);                   // Send byte to Remote Arduino
+        RS485Serial.write(byteToSend1);                  // Send byte to Remote Arduino
+        RS485Serial.write(byteToSend2);                  // Send byte to Remote Arduino
+        RS485Serial.write(byteToSend3);                  // Send byte to Remote Arduino        
+        delay(10);
+        digitalWrite(SSerialTxControl, RS485Receive);    // Disable RS485 Transmit
+
+        delay(2000);
+
+        Serial.println("   ");
+    }   // fine del while principale
+// #################################################################################################
+    while (digitalRead(BUTTON2) == LOW) {  // legge il valore dell'input e lo conserva  
+  
+        while (digitalRead(BUTTON2) == LOW) { delay(1); }   // attesa rilascio pulsante
+        byteToSend2 = 0x02 ;    // letto pulsante 2
+        byteToSend3 = byteToSend3 + 1 ;                 // incrementa di uno    ss
+        if (byteToSend3 >= 200) { byteToSend3 = 0 ; }   // reset del contatore  ss
+
+        Serial.println("inviato a s1 ->   ----------------inizio dati");
+        Serial.print("  byte 0: ");Serial.print(byteToSend,HEX); Serial.println(" master"); 
+        Serial.print("  byte 1: ");Serial.print(byteToSend1,HEX);Serial.println(" slave ");
+        Serial.print("  byte 2: ");Serial.print(byteToSend2,HEX);Serial.println(" pulsante");
+        Serial.print("  byte 3: ");Serial.print(byteToSend3,HEX);Serial.println(" dato  ");    
+        Serial.println("------------------------------------fine dati");Serial.println(" "); 
+
+        digitalWrite(SSerialTxControl, RS485Transmit);   // Enable RS485 Transmit
+        delay(10);
+        RS485Serial.write(byteToSend);                   // Send byte to Remote Arduino
+        RS485Serial.write(byteToSend1);                  // Send byte to Remote Arduino
+        RS485Serial.write(byteToSend2);                  // Send byte to Remote Arduino
+        RS485Serial.write(byteToSend3);                  // Send byte to Remote Arduino        
+        delay(10);
+        digitalWrite(SSerialTxControl, RS485Receive);    // Disable RS485 Transmit
+
+        delay(2000);
+
+        Serial.println("   ");
+    }   // fine del while principale
+// #################################################################################################    
+// -------------------------------------------------------------------------------------------------------
+    while (RS485Serial.available() > 0 ) {                                     // stampa quanto letto
+        Serial.print("valore di available : "); Serial.print(RS485Serial.available(),HEX); 
+        Serial.print ("  -> letto : "); Serial.println(RS485Serial.read(),HEX);
+ 
+       // digitalWrite(Pin13LED, HIGH); delay(10); // Show activity
+       // digitalWrite(Pin13LED, LOW); delay(10);  // Show activity
+    }
+// ------------------------------------------------------------------------------------------------------
+}//--(end main loop )---
+
+
+/*
+while (Serial.available()) {
+ byte x = Serial.read();
+ ..
+ ..
+ ..
+}
+*/

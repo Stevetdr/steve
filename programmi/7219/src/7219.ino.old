@@ -1,0 +1,122 @@
+#include <LedControl.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+// inputs: DIN pin, CLK pin, LOAD pin, number of chips 7219 attached
+//     pin  5        6         7        1     arduino pin
+LedControl lc = LedControl(5, 6, 7, 2);
+
+unsigned long delaytime=800; /* we always wait a bit between updates of the display */
+unsigned long delaytime1=10;
+
+char a ;	//definizioni generiche
+int ia = 0 ;	//definizioni generiche
+ 
+ int SSarray[] = {B00000000,
+ 	B00000000,B11111110,B00100010,B00100010,B00100010,B11111110,B00000000,B00000000,		// A 1
+ 	B00000000,B11111110,B10010010,B10010010,B10010010,B01101100,B00000000,B00000000,		// B 2
+ 	B00000000,B11111110,B10000010,B10000010,B10000010,B10000010,B00000000,B00000000,		// C 3
+ 	B00000000,B11111110,B10000010,B10000010,B10000100,B01111000,B00000000,B00000000,		// D 4
+ 	B00000000,B11111110,B10010010,B10010010,B10000010,B10000010,B00000000,B00000000,		// E 5
+ 	B00000000,B11111110,B00010010,B00010010,B00000010,B00000010,B00000000,B00000000,		// F 6
+ 	B00000000,B11111110,B10000010,B10000010,B10010010,B11110010,B00000000,B00000000,		// G 7
+ 	B00000000,B11111110,B00010000,B00010000,B00010000,B11111110,B00000000,B00000000,		// H 8
+	B00000000,B00000000,B10000010,B11111110,B10000010,B00000000,B00000000,B00000000,		// I 9
+	B00000000,B01000000,B10000000,B10000000,B10000000,B01111110,B00000000,B00000000,		// J 10 
+	B00000000,B11111110,B00100000,B01010000,B10001110,B00000000,B00000000,B00000000,		// K 11 
+	B00000000,B11111110,B10000000,B10000000,B10000000,B10000000,B00000000,B00000000,		// L 12
+	B00000000,B11111110,B00000100,B00001000,B00000100,B11111110,B00000000,B00000000,		// M 13
+	B00000000,B11111110,B00000100,B00111000,B01000000,B11111110,B00000000,B00000000,		// N 14
+	B00000000,B11111110,B10000010,B10000010,B10000010,B11111110,B00000000,B00000000,		// O 15
+	B00000000,B11111110,B00010010,B00010010,B00010010,B00011110,B00000000,B00000000,		// P 16
+	B00000000,B11111110,B10000010,B10100010,B11000010,B11111110,B00000000,B00000000,		// Q 17
+	B00000000,B11111110,B00010010,B00110010,B01010010,B10011110,B00000000,B00000000,		// R 18
+	B00000000,B10011110,B10010010,B10010010,B10010010,B11110010,B00000000,B00000000,		// S 19
+	B00000000,B00000010,B00000010,B11111110,B00000010,B00000010,B00000000,B00000000,		// T 20
+	B00000000,B11111110,B10000000,B10000000,B10000000,B11111110,B00000000,B00000000,		// U 21
+    B00000000,B00000110,B00111000,B11000000,B00111000,B00000110,B00000000,B00000000,        // V 22
+	B01010101,B10101010,B01010101,B10101010,B01010101,B10101010,B01010101,B10101010,        // grata 23  schifezza   
+	B11100111,B11000011,B10000001,B10111001,B10011001,B10000001,B10000001,B11000011,		// angoli 24 schifezza
+	B00000000,B00000000,B00100000,B01010100,B01010100,B01111000,B00000000,B00000000};		// 25 a piccola senza modifica
+
+
+
+void setup() { 
+
+  //Serial.begin(9600);	
+
+  lc.shutdown(0,false); // The MAX72XX is in power-saving mode on startup,we have to do a wakeup call
+  lc.setIntensity(0,1); // Set the brightness to a medium values
+  lc.clearDisplay(0);   // and clear the display
+
+  lc.shutdown(1,false); // The MAX72XX is in power-saving mode on startup,we have to do a wakeup call
+  lc.setIntensity(1,1); // Set the brightness to a medium values
+  lc.clearDisplay(1);   // and clear the display
+
+}
+	
+void Work() { 
+
+	for(int start=0; start <23; start++) {
+		ia = start * 8;
+	delay(delaytime);
+ 		for(int cols=0; cols <8; cols++)
+			{ lc.setRow(0,cols,SSarray[(23*8)+cols+1]);			//lc.setRow(1,leds,SSarray[ia+leds+8]);      //Serial.print(start); Serial.print("  "); Serial.print(ia); Serial.print("  "); Serial.println(start); }
+        	  lc.setRow(1,cols,SSarray[(24*8)+cols+1]); }
+  }
+}
+
+
+/*
+  This function lights up a some Leds in a row.
+ The pattern will be repeated on every row.
+ The pattern will blink along with the row-number.
+ row number 4 (index==3) will blink 4 times etc.
+ */
+
+/*
+void rows() {
+  for(int row=0;row<8;row++) {
+    delay(delaytime1);
+    lc.setRow(0,row,B10000001);
+    delay(delaytime1);
+    lc.setRow(0,row,(byte)0);
+    for(int i=0;i<row;i++) {
+      delay(delaytime1);
+      lc.setRow(0,row,B10000001);
+      delay(delaytime1);
+      lc.setRow(0,row,(byte)0);
+    }
+  }
+}
+
+*/
+
+/*
+  This function lights up a some Leds in a column.
+ The pattern will be repeated on every column.
+ The pattern will blink along with the column-number.
+ column number 4 (index==3) will blink 4 times etc.
+ */
+/*
+void columns() {
+  for(int col=0;col<8;col++) {
+    delay(delaytime1);
+    lc.setColumn(0,col,B10000001);
+    delay(delaytime1);
+    lc.setColumn(0,col,(byte)0);
+    for(int i=0;i<col;i++) {
+      delay(delaytime1);
+      lc.setColumn(0,col,B10000001);
+      delay(delaytime1);
+      lc.setColumn(0,col,(byte)0);
+    }
+  }
+}
+
+
+*/
+
+void loop() { 
+	Work();
+}

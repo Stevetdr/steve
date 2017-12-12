@@ -1,0 +1,14 @@
+
+
+
+
+
+.build/nano328/src/luce_allarme.cpp : src/luce_allarme.ino
+	@mkdir -p .build/nano328/src
+	@echo [93msrc/luce_allarme.ino[0m
+	@/usr/local/bin/ino preproc  -o $@ $^
+
+
+all : .build/nano328/src/luce_allarme.cpp
+	@true
+

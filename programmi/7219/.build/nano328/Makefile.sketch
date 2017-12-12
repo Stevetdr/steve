@@ -1,0 +1,14 @@
+
+
+
+
+
+.build/nano328/src/7219.cpp : src/7219.ino
+	@mkdir -p .build/nano328/src
+	@echo [93msrc/7219.ino[0m
+	@/usr/local/bin/ino preproc  -o $@ $^
+
+
+all : .build/nano328/src/7219.cpp
+	@true
+

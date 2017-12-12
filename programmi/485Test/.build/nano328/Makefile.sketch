@@ -1,0 +1,14 @@
+
+
+
+
+
+.build/nano328/src/RS-485_Main.cpp : src/RS-485_Main.ino
+	@mkdir -p .build/nano328/src
+	@echo [93msrc/RS-485_Main.ino[0m
+	@/usr/local/bin/ino preproc  -o $@ $^
+
+
+all : .build/nano328/src/RS-485_Main.cpp
+	@true
+

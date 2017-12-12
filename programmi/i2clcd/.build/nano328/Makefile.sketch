@@ -1,0 +1,14 @@
+
+
+
+
+
+.build/nano328/src/i2clcd.cpp : src/i2clcd.ino
+	@mkdir -p .build/nano328/src
+	@echo [93msrc/i2clcd.ino[0m
+	@/usr/local/bin/ino preproc  -o $@ $^
+
+
+all : .build/nano328/src/i2clcd.cpp
+	@true
+

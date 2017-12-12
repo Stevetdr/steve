@@ -1,0 +1,150 @@
+#include <Arduino.h>
+#include <SoftwareSerial.h>
+#include <EEPROM.h>
+void setup();
+void loop();
+void SendDataToSlave();
+void AVideoDatiSpediti();
+void ReceiveDataFrom485();
+void AVideoIDatiLetti();
+#line 1 "src/m1.ino"
+/*-----( Import needed libraries )-----*/
+//#include <SoftwareSerial.h>
+//#include <EEPROM.h>
+/*-----( Declare Constants and Pin Numbers )-----*/
+#define SSerialRX        6   //10  //Serial Receive pin     RO
+#define SSerialTX        5   //11  //Serial Transmit pin    DI
+#define SSerialTxControl 3   //RS485 Direction control
+
+#define RS485Transmit    HIGH
+#define RS485Receive     LOW
+
+#define Pin13LED         13
+#define BUTTON1          12              // pin di input dove è collegato il pulsante P1
+#define BUTTON2          11              // pin di input dove è collegato il pulsante P2
+
+/*-----( Declare objects )-----*/
+SoftwareSerial RS485Serial(SSerialRX, SSerialTX); // RX, TX
+
+/*-----( Declare Variables )-----*/
+int DatiDaSpedire[11];    // 11 byte (compreso lo 0)(usati da [1] a [10]) Vedi sotto per spegazione
+int DatiRicevuti[11];     // 11 byte (compreso lo 0)(usati da [1] a [10]) Vedi sotto per spegazione
+int Pnt1 = 0;   		  // serve per la funzione receive
+int x = 0x00;   		  // uso generico
+
+// ==================================================================================================
+void setup() {  /****** SETUP: RUNS ONCE ******/
+
+    DatiDaSpedire[1] = 0x02;   // start of data
+    DatiDaSpedire[2] = 0x10;   // 0x10 e' il master
+    DatiDaSpedire[3] = 0x00;   // indirizzo dello slave da definire
+    DatiDaSpedire[4] = 0x00; DatiDaSpedire[5] = 0x00; DatiDaSpedire[6] = 0x00;  // dato generico
+    DatiDaSpedire[7] = 0x00; DatiDaSpedire[8] = 0x00; DatiDaSpedire[9] = 0x00;   // dato generico 
+    DatiDaSpedire[10] = 0x03;   // end of data 
+
+    Serial.begin(9600); // Start the serial port
+    pinMode(Pin13LED, OUTPUT);
+    pinMode(SSerialTxControl, OUTPUT);
+    pinMode(BUTTON1, INPUT);     // imposta il pin digitale come input  
+    pinMode(BUTTON2, INPUT);     // imposta il pin digitale come input      
+    digitalWrite(SSerialTxControl, RS485Receive);  // Init Transceiver
+    RS485Serial.begin(4800);   // Start the software serial port and set the data rate   era 300
+
+    Serial.print (F("Parte il monitor sul Master: l'indirizzo e': "));Serial.println(EEPROM.read (0),DEC); Serial.println("");
+
+    while (RS485Serial.available()) { x = RS485Serial.read(); } // reset del contenuto del buffer            
+}   //--(end s
+
+void loop() {  /****** LOOP: RUNS CONSTANTLY ******/
+// #################################################################################################
+    while (digitalRead(BUTTON1) == LOW || digitalRead(BUTTON2) == LOW) {  // Un pulsante premuto?
+
+        if (digitalRead(BUTTON1) == LOW) { // letto pulsante 1
+            DatiDaSpedire[03] = 0x11; // dati generici a slave 11   
+            DatiDaSpedire[04] = 0x01; DatiDaSpedire[06] = 0x65;   
+            }     
+        if (digitalRead(BUTTON2) == LOW) { // dati generici  a slave 12 
+            DatiDaSpedire[03] = 0x12; // slave
+            DatiDaSpedire[04] = 0x02; DatiDaSpedire[06] = 0x66;   
+            }           
+
+        while (digitalRead(BUTTON1) == LOW || digitalRead(BUTTON2) == LOW) { delay(1); }   // attesa rilascio pulsante
+
+        SendDataToSlave();  // invio dei dati della matrice agli slave
+
+        AVideoDatiSpediti();   // stampa a video i dati spediti sulla linea        
+
+
+        delay(2000);// LOOP PER ATTESA RISPOSTA DELLO SLAVE da togliere assolutamente
+
+        Serial.println("   ");
+    }   // fine del while principale 
+// #################################################################################################
+// end of LOOP   
+// -------------------------------------------------------------------------------------------------------
+    // questa e' la routine per leggere quanto risposto dallo slave
+    while (RS485Serial.available() > 0 ) {                                     // stampa quanto letto
+
+		ReceiveDataFrom485();
+		AVideoIDatiLetti();
+ 
+        digitalWrite(Pin13LED, HIGH); delay(10); // Show activity
+        digitalWrite(Pin13LED, LOW); delay(10);  // Show activity
+    }
+// ------------------------------------------------------------------------------------------------------
+}//--(end main loop )---
+
+// =======================================================================================================
+// =======================================================================================================
+void SendDataToSlave() {   // Send bytes to Remote Arduino by 485 ========================================
+
+    digitalWrite(SSerialTxControl, RS485Transmit);   // Enable RS485 Transmit
+    delay(10);
+    for (int x=1; x < 11 ;x++) { RS485Serial.write(DatiDaSpedire[x]); }                 
+    delay(10);
+    digitalWrite(SSerialTxControl, RS485Receive);    // Disable RS485 Transmit
+}
+// =======================================================================================================
+/*  formato invio dati da MASTER a SLAVE
+    DatiDaSpedire   0       non usato
+                    1       start of data 0x02
+                    2       indirizzo del master sempre 0x10
+                    3       indirizzo dello slave a cui il comando e' inviato
+                    4-9     6 byte per i comandi o per i dati da inviare
+                    10      end of data 0x03
+
+*/
+// =======================================================================================================
+void AVideoDatiSpediti() {    // stampa a video i dati spediti sulla linea
+    Serial.println("inviato sulla 485 ->   ------------------------------------------------inizio dati");
+    for (int x=1; x < 11 ;x++) { Serial.print("[");Serial.print(x);Serial.print("]");Serial.print("\t");} 
+    Serial.println(""); 
+    for (int x=1; x < 11 ;x++) { Serial.print(DatiDaSpedire[x],HEX);Serial.print("\t");}   
+    Serial.println("");  
+    Serial.println("------------------------------------------------------------------------ fine dati");Serial.println(" ");  
+}
+// =======================================================================================================	
+
+//********************************************************************************************************* 
+void ReceiveDataFrom485() {
+
+    Pnt1 = 1 ;  // reset del pointer della matrice di scrittura
+    while (RS485Serial.available()) {                     
+        delay(10);  // serve per permettere il completamento dell'operazione di lettura o scrittura
+        DatiRicevuti[Pnt1] = RS485Serial.read() ;     // legge e scrive nella matrice dal byte 1
+        //Serial.println(DatiRicevuti[Pnt1],HEX);
+        Pnt1 = Pnt1 + 1;
+    }
+    delay(10); 
+}
+//********************************************************************************************************* 
+void AVideoIDatiLetti() {           // a video i dati letti sulla linea
+    Serial.println("Ricevuti dalla 485 i seguenti dati : ----------------------------------------------");
+
+    for (int x=1; x < 11 ;x++) { Serial.print("[");Serial.print(x);Serial.print("]");Serial.print("\t");} 
+    Serial.println(""); 
+    for (int x=1; x < 11 ;x++) { Serial.print(DatiRicevuti[x],HEX);Serial.print("\t");}   
+    Serial.println(""); 
+    Serial.println("-------------------------------------------------------------- fine dati dalla 485");Serial.println(" ");
+}
+//*********************************************************************************************************

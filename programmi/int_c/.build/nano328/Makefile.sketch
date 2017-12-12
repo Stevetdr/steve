@@ -1,0 +1,14 @@
+
+
+
+
+
+.build/nano328/src/int_comp.cpp : src/int_comp.ino
+	@mkdir -p .build/nano328/src
+	@echo [93msrc/int_comp.ino[0m
+	@/usr/local/bin/ino preproc  -o $@ $^
+
+
+all : .build/nano328/src/int_comp.cpp
+	@true
+

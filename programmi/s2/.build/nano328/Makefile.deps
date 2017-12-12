@@ -1,0 +1,34 @@
+
+
+
+
+
+
+
+
+	
+
+
+
+.build/nano328/Wire/utility/twi.d : /usr/share/arduino/libraries/Wire/utility/twi.c
+	@mkdir -p .build/nano328/Wire/utility
+	@/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=105 -I/usr/share/arduino/hardware/arduino/cores/arduino -ffunction-sections -fdata-sections -g -Os -w -I/usr/share/arduino/hardware/arduino/variants/eightanaloginputs -I/usr/share/arduino/hardware/arduino/cores/arduino -I/usr/share/arduino/hardware/arduino/cores/arduino/avr-libc -Ilib/SSArduinoLibs -Ilib/SSArduinoLibs/LedControl -Ilib/SSArduinoLibs/LiquidCrystal_I2C -Ilib/SSArduinoLibs/MaxMatrix -Ilib/SSArduinoLibs/LnLibraries -Ilib/SSArduinoLibs/LnLibraries/LnRS485_non_blocking -Ilib/SSArduinoLibs/LnLibraries/MAX7219 -Ilib/SSArduinoLibs/LnLibraries/VirtualWire114 -Ilib/SSArduinoLibs/LnLibraries/LnFunctions -Ilib/SSArduinoLibs/LnLibraries/VirtualWire115 -Ilib/SSArduinoLibs/LnLibraries/RS485_protocol -Ilib/SSArduinoLibs/LnLibraries/VirtualWire114/util -Ilib/SSArduinoLibs/LnLibraries/VirtualWire114/doc -Ilib/SSArduinoLibs/LnLibraries/VirtualWire115/util -Ilib/SSArduinoLibs/LnLibraries/VirtualWire115/doc -Ilib/SSArduinoLibs/LnLibraries/VirtualWire114/util -Ilib/SSArduinoLibs/LnLibraries/VirtualWire114/doc -Ilib/SSArduinoLibs/LnLibraries/VirtualWire115/util -Ilib/SSArduinoLibs/LnLibraries/VirtualWire115/doc -I/usr/share/arduino/libraries/SPI -I/usr/share/arduino/libraries/TFT -I/usr/share/arduino/libraries/TFT/utility -I/usr/share/arduino/libraries/Wire -I/usr/share/arduino/libraries/Wire/utility -I/usr/share/arduino/libraries/LiquidCrystal -I/usr/share/arduino/libraries/WiFi -I/usr/share/arduino/libraries/WiFi/utility -I/usr/share/arduino/libraries/Robot_Control -I/usr/share/arduino/libraries/Robot_Control/utility -I/usr/share/arduino/libraries/Robot_Motor -I/usr/share/arduino/libraries/Servo -I/usr/share/arduino/libraries/Stepper -I/usr/share/arduino/libraries/Esplora -I/usr/share/arduino/libraries/GSM -I/usr/share/arduino/libraries/Ethernet -I/usr/share/arduino/libraries/Ethernet/utility -I/usr/share/arduino/libraries/SD -I/usr/share/arduino/libraries/SD/utility -I/usr/share/arduino/libraries/Firmata -I/usr/share/arduino/libraries/EEPROM -I/usr/share/arduino/libraries/SoftwareSerial  -MM $^ > $@
+	
+	@printf ".build/nano328/Wire/utility/twi.d .build/nano328/Wire/utility/" | cat - $@ > $@~ && mv $@~ $@
+
+.build/nano328/Wire/Wire.d : /usr/share/arduino/libraries/Wire/Wire.cpp
+	@mkdir -p .build/nano328/Wire
+	@/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=105 -I/usr/share/arduino/hardware/arduino/cores/arduino -ffunction-sections -fdata-sections -g -Os -w -I/usr/share/arduino/hardware/arduino/variants/eightanaloginputs -I/usr/share/arduino/hardware/arduino/cores/arduino -I/usr/share/arduino/hardware/arduino/cores/arduino/avr-libc -Ilib/SSArduinoLibs -Ilib/SSArduinoLibs/LedControl -Ilib/SSArduinoLibs/LiquidCrystal_I2C -Ilib/SSArduinoLibs/MaxMatrix -Ilib/SSArduinoLibs/LnLibraries -Ilib/SSArduinoLibs/LnLibraries/LnRS485_non_blocking -Ilib/SSArduinoLibs/LnLibraries/MAX7219 -Ilib/SSArduinoLibs/LnLibraries/VirtualWire114 -Ilib/SSArduinoLibs/LnLibraries/LnFunctions -Ilib/SSArduinoLibs/LnLibraries/VirtualWire115 -Ilib/SSArduinoLibs/LnLibraries/RS485_protocol -Ilib/SSArduinoLibs/LnLibraries/VirtualWire114/util -Ilib/SSArduinoLibs/LnLibraries/VirtualWire114/doc -Ilib/SSArduinoLibs/LnLibraries/VirtualWire115/util -Ilib/SSArduinoLibs/LnLibraries/VirtualWire115/doc -Ilib/SSArduinoLibs/LnLibraries/VirtualWire114/util -Ilib/SSArduinoLibs/LnLibraries/VirtualWire114/doc -Ilib/SSArduinoLibs/LnLibraries/VirtualWire115/util -Ilib/SSArduinoLibs/LnLibraries/VirtualWire115/doc -I/usr/share/arduino/libraries/SPI -I/usr/share/arduino/libraries/TFT -I/usr/share/arduino/libraries/TFT/utility -I/usr/share/arduino/libraries/Wire -I/usr/share/arduino/libraries/Wire/utility -I/usr/share/arduino/libraries/LiquidCrystal -I/usr/share/arduino/libraries/WiFi -I/usr/share/arduino/libraries/WiFi/utility -I/usr/share/arduino/libraries/Robot_Control -I/usr/share/arduino/libraries/Robot_Control/utility -I/usr/share/arduino/libraries/Robot_Motor -I/usr/share/arduino/libraries/Servo -I/usr/share/arduino/libraries/Stepper -I/usr/share/arduino/libraries/Esplora -I/usr/share/arduino/libraries/GSM -I/usr/share/arduino/libraries/Ethernet -I/usr/share/arduino/libraries/Ethernet/utility -I/usr/share/arduino/libraries/SD -I/usr/share/arduino/libraries/SD/utility -I/usr/share/arduino/libraries/Firmata -I/usr/share/arduino/libraries/EEPROM -I/usr/share/arduino/libraries/SoftwareSerial  -MM $^ > $@
+	
+	@printf ".build/nano328/Wire/Wire.d .build/nano328/Wire/" | cat - $@ > $@~ && mv $@~ $@
+
+
+
+.build/nano328/Wire/dependencies.d : .build/nano328/Wire/utility/twi.d .build/nano328/Wire/Wire.d
+	@echo [96mScanning dependencies of Wire[0m
+	@mkdir -p .build/nano328/Wire
+	@cat $^ > $@;
+
+all : .build/nano328/Wire/dependencies.d
+	@true
+

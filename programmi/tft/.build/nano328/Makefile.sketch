@@ -1,0 +1,14 @@
+
+
+
+
+
+.build/nano328/src/tft.cpp : src/tft.ino
+	@mkdir -p .build/nano328/src
+	@echo [93msrc/tft.ino[0m
+	@/usr/local/bin/ino preproc  -o $@ $^
+
+
+all : .build/nano328/src/tft.cpp
+	@true
+
